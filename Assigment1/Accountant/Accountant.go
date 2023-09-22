@@ -1,39 +1,39 @@
-package Bookkeeper
+package Accountant
 
-type Bookkeeper struct {
+type Accountant struct {
 	position string
 	salary   float64
 	address  string
 }
 
-func NewBookkeeper(position string, salary float64, address string) *Bookkeeper {
-	return &Bookkeeper{
+func NewAccountant(position string, salary float64, address string) *Accountant {
+	return &Accountant{
 		position: position,
 		salary:   salary,
 		address:  address,
 	}
 }
 
-func (m *Bookkeeper) GetPosition() string {
+func (m *Accountant) GetPosition() string {
 	return m.position
 }
 
-func (m *Bookkeeper) SetPosition(position string) {
+func (m *Accountant) SetPosition(position string) {
 	m.position = position
 }
 
-func (m *Bookkeeper) GetSalary() float64 {
+func (m *Accountant) GetSalary() float64 {
 	return m.salary
 }
 
-func (m *Bookkeeper) SetSalary(salary float64) {
+func (m *Accountant) SetSalary(salary float64) {
 	m.salary = salary
 }
 
-func (m *Bookkeeper) GetAddress() string {
+func (m *Accountant) GetAddress() string {
 	return m.address
 }
 
-func (m *Bookkeeper) SetAddress(address string) {
+func (m *Accountant) SetAddress(address string) {
 	m.address = address
 }
