@@ -1,55 +1,55 @@
 package main
 
 import (
-	"EBG.IssataySheg.net/internal/data"
-	"EBG.IssataySheg.net/internal/validator"
+	"PSSPbynurbolat.net/internal/data"
+	"PSSPbynurbolat.net/internal/validator"
 	"errors"
 	"fmt"
 	"net/http"
 )
 
-func (app *application) createGameHandler(w http.ResponseWriter, r *http.Request) {
+func (app *application) createSequrityHandler(w http.ResponseWriter, r *http.Request) {
 	var input struct {
 		Title string     `json:"title"`
-		Score data.Score `json:"score"`
-		Games []string   `json:"games"`
+		Safety data.safety level `json:"safety level"`
+		Sequrity []string   `json:"sequrity"`
 	}
 	err := app.readJSON(w, r, &input)
 	if err != nil {
 		app.badRequestResponse(w, r, err)
 		return
 	}
-	game := &data.Game{
+	sequrity := &data.sequrity{
 		Title: input.Title,
-		Score: input.Score,
-		Games: input.Games,
+		safety level: input.safety levele,
+		sequrity: input.sequrity,
 	}
 	v := validator.New()
-	if data.ValidateMovie(v, game); !v.Valid() {
+	if data.ValidateMovie(v, sequrity); !v.Valid() {
 		app.failedValidationResponse(w, r, v.Errors)
 		return
 	}
 	fmt.Fprintf(w, "%+v\n", input)
-	err = app.models.Games.Insert(game)
+	err = app.models.sequrity.Insert(sequrity)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 		return
 	}
 	headers := make(http.Header)
-	headers.Set("Location", fmt.Sprintf("/v1/games/%d", game.ID))
-	err = app.writeJSON(w, http.StatusCreated, envelope{"game": game}, headers)
+	headers.Set("Location", fmt.Sprintf("/v1/sequrity/%d", sequrity.ID))
+	err = app.writeJSON(w, http.StatusCreated, envelope{"sequrity": sequrity}, headers)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 	}
 }
 
-func (app *application) showGameHandler(w http.ResponseWriter, r *http.Request) {
+func (app *application) showsequrityHandler(w http.ResponseWriter, r *http.Request) {
 	id, err := app.readIDParam(r)
 	if err != nil {
 		http.NotFound(w, r)
 		return
 	}
-	game, err := app.models.Games.Get(id)
+	sequrity, err := app.models.sequrity.Get(id)
 	if err != nil {
 		switch {
 		case errors.Is(err, data.ErrRecordNotFound):
@@ -59,19 +59,19 @@ func (app *application) showGameHandler(w http.ResponseWriter, r *http.Request) 
 		}
 		return
 	}
-	err = app.writeJSON(w, http.StatusOK, envelope{"game": game}, nil)
+	err = app.writeJSON(w, http.StatusOK, envelope{"sequrity": sequrity}, nil)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 	}
 }
 
-func (app *application) updateGameHandler(w http.ResponseWriter, r *http.Request) {
+func (app *application) updatesequrityHandler(w http.ResponseWriter, r *http.Request) {
 	id, err := app.readIDParam(r)
 	if err != nil {
 		app.notFoundResponse(w, r)
 		return
 	}
-	game, err := app.models.Games.Get(id)
+	sequrity, err := app.models.sequrity.Get(id)
 	if err != nil {
 		switch {
 		case errors.Is(err, data.ErrRecordNotFound):
@@ -83,8 +83,8 @@ func (app *application) updateGameHandler(w http.ResponseWriter, r *http.Request
 	}
 	var input struct {
 		Title *string     `json:"title"`
-		Score *data.Score `json:"score"`
-		Games []string    `json:"games"`
+		safety level *data.safety level `json:"safety level"`
+		sequrity []string    `json:"sequrity"`
 	}
 	err = app.readJSON(w, r, &input)
 	if err != nil {
@@ -92,20 +92,20 @@ func (app *application) updateGameHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 	if input.Title != nil {
-		game.Title = *input.Title
+		sequrity.Title = *input.Title
 	}
-	if input.Score != nil {
-		game.Score = *input.Score
+	if input.safety level != nil {
+		sequrity.safety level = *input.safety level
 	}
-	if input.Games != nil {
-		game.Games = input.Games
+	if input.sequrity != nil {
+		sequrity.sequrity = input.sequrity
 	}
 	v := validator.New()
-	if data.ValidateMovie(v, game); !v.Valid() {
+	if data.ValidateMovie(v, sequrity); !v.Valid() {
 		app.failedValidationResponse(w, r, v.Errors)
 		return
 	}
-	err = app.models.Games.Update(game)
+	err = app.models.sequrity.Update(sequrity)
 	if err != nil {
 		switch {
 		case errors.Is(err, data.ErrEditConflict):
@@ -116,19 +116,19 @@ func (app *application) updateGameHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	err = app.writeJSON(w, http.StatusOK, envelope{"game": game}, nil)
+	err = app.writeJSON(w, http.StatusOK, envelope{"sequrity": sequrity}, nil)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 	}
 }
 
-func (app *application) deleteGameHandler(w http.ResponseWriter, r *http.Request) {
+func (app *application) delete sequrityHandler(w http.ResponseWriter, r *http.Request) {
 	id, err := app.readIDParam(r)
 	if err != nil {
 		app.notFoundResponse(w, r)
 		return
 	}
-	err = app.models.Games.Delete(id)
+	err = app.models.sequrity.Delete(id)
 	if err != nil {
 		switch {
 		case errors.Is(err, data.ErrRecordNotFound):
@@ -138,36 +138,36 @@ func (app *application) deleteGameHandler(w http.ResponseWriter, r *http.Request
 		}
 		return
 	}
-	err = app.writeJSON(w, http.StatusOK, envelope{"message": "game successfully deleted"}, nil)
+	err = app.writeJSON(w, http.StatusOK, envelope{"message": "sequrity successfully deleted"}, nil)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 	}
 }
 
-func (app *application) listGamesHandler(w http.ResponseWriter, r *http.Request) {
+func (app *application) listsequrityHandler(w http.ResponseWriter, r *http.Request) {
 	var input struct {
 		Title string
-		Games []string
+		sequrity []string
 		data.Filters
 	}
 	v := validator.New()
 	qs := r.URL.Query()
 	input.Title = app.readString(qs, "title", "")
-	input.Games = app.readCSV(qs, "games", []string{})
+	input.sequrity = app.readCSV(qs, "sequrity", []string{})
 	input.Page = app.readInt(qs, "page", 1, v)
 	input.PageSize = app.readInt(qs, "page_size", 20, v)
 	input.Sort = app.readString(qs, "sort", "id")
-	input.Filters.SortSafelist = []string{"id", "title", "score", "-id", "-title", "-score"}
+	input.Filters.SortSafelist = []string{"id", "title", "safety level", "-id", "-title", "-safety level"}
 	if data.ValidateFilters(v, input.Filters); !v.Valid() {
 		app.failedValidationResponse(w, r, v.Errors)
 		return
 	}
-	games, metadata, err := app.models.Games.GetAll(input.Title, input.Games, input.Filters)
+	sequrity, metadata, err := app.models.sequritys.GetAll(input.Title, input.sequrity, input.Filters)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 		return
 	}
-	err = app.writeJSON(w, http.StatusOK, envelope{"games": games, "metadata": metadata}, nil)
+	err = app.writeJSON(w, http.StatusOK, envelope{"sequrity": sequrity, "metadata": metadata}, nil)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 	}
