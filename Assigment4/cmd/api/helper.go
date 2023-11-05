@@ -1,7 +1,7 @@
 package main
 
 import (
-	"EBG.IssataySheg.net/internal/validator"
+	"PSSPbynurbolat.net/internal/validator"
 	"encoding/json"
 	"errors"
 	"fmt"
