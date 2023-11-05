@@ -1,0 +1,2 @@
+ALTER TABLE sequrity ADD CONSTRAINT sequrity_safety_check CHECK (score >= 0);
+ALTER TABLE sequrity ADD CONSTRAINT sequrity_length_check CHECK (array_length(sequrity, 1) BETWEEN 1 AND 5);
